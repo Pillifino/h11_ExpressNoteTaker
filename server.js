@@ -3,7 +3,7 @@ const express = require('express'); //Not sure if these are supposed to be in th
 const path = require('path')
 const api = require('./routes/index.js') //THIS BREAKS THE ROUTES FOR SOME REASON
 
-const PORT = 2001;
+const PORT = process.env.PORT || 2001;
 
 const app = express(); //Not sure if these are supposed to be in the routes file or servver file
 
