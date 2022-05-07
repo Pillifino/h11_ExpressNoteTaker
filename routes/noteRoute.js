@@ -2,34 +2,35 @@ const router = require('express').Router();
 const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
 
-const express = require('express'); //Not sure if these are supposed to be in the routes file or servver file
-const app = express(); //Not sure if these are supposed to be in the routes file or servver file
-
+// api/notes
 router.get('/', (req, res) => {
   console.info(`${req.method} request received for feedback`);
 
-  readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+  readFromFile('./db/db.json', 'utf-8').then((data) => {
+    console.log(data)
+    res.json(JSON.parse(data))});
 });
 
-router.post('/api/notes', (req, res) => {
+router.post('/', (req, res) => {
     // Log that a POST request was received
     console.info(`${req.method} request received to submit feedback`);
     
-    console.log(data)
+    
     // Destructuring assignment for the items in req.body
-    const {noteTitle, noteText } = req.body;
-  
+    const {title, text } = req.body;
+    console.log(title, text, 21)
+    console.log(req.body)
     // If all the required properties are present
-    if (noteTitle && noteText) {
+    if (title && text) {
       // Variable for the object we will save
       const newFeedback = {
-        noteTitle,
-        noteText,
+        title,
+        text,
         review_id: uuid(),
       };
-  
+      console.log(newFeedback)
       readAndAppend(newFeedback, './db/db.json');
-      console.log(readAndAppend)
+      
       
       const response = {
         status: 'success',
